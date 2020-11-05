@@ -825,36 +825,6 @@ namespace RBot
             }
         }
 
-        /// <summary>
-        /// Attempts to join a glitched room (decrements the room number until joined successfully).
-        /// THIS IS PATCHED. THIS WILL NOW JOIN A NORMAL ROOM (proxies a call to Join).
-        /// </summary>
-        /// <param name="map">The name of the map.</param>
-        /// <param name="cell">The cell to jump to.</param>
-        /// <param name="pad">The pad to jump to.</param>
-        public void JoinGlitched(string map, string cell = "Spawn", string pad = "Enter")
-        {
-            _Join(map, cell, pad);
-        }
-
-        private void _JoinGlitched(string map, string cell, string pad, int counter)
-        {
-            if (Bot.Options.SafeTimings)
-                Bot.Wait.ForActionCooldown(ScriptWait.GameActions.Transfer);
-            this.JoinPacket(map + "--------------" + counter.ToString(), cell, pad);
-            if (Bot.Options.SafeTimings)
-            {
-                if (!Bot.Wait.ForMapLoad(map, 20))
-                {
-                    Jump(Cell, Pad, false);
-                    Thread.Sleep(ScriptWait.WAIT_SLEEP * 10);
-                    _JoinGlitched(map, cell, pad, counter - 1);
-                }
-                else
-                    Jump(cell, pad);
-            }
-        }
-
         internal void JoinPacket(string map, string cell, string pad)
         {
             ScriptInterface.Instance.SendPacket($"%xt%zm%cmd%{Bot.Map.RoomID}%tfer%{Username}%{map}%{cell}%{pad}%");

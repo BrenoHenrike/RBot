@@ -24,6 +24,11 @@ namespace RBot
         public static ScriptInterface Instance => _instance ?? (_instance = new ScriptInterface());
 
         /// <summary>
+        /// An object holding methods for easy saga/quest sequence bots.
+        /// </summary>
+        public ScriptSaga Saga { get; set; }
+
+        /// <summary>
         /// An object holding options for the current bot.
         /// </summary>
         public ScriptOptions Options { get; set; }
